@@ -85,36 +85,37 @@ if uploaded_file is not None:
     })
 
     st.write(pred_df)'''
+
    # Assume last_value is a numpy array of shape (n_features,)
-current_value = last_value.reshape(1, -1)  # ensure correct 2D shape
-predictions_scaled = []
+    current_value = last_value.reshape(1, -1)  # ensure correct 2D shape
+    predictions_scaled = []
 
-for _ in range(30):
-    # Predict next day
-    next_pred = model.predict(current_value)  # shape (1,) or (1,1)
-    predictions_scaled.append(next_pred[0])
+    for _ in range(30):
+        # Predict next day
+         next_pred = model.predict(current_value)  # shape (1,) or (1,1)
+        predictions_scaled.append(next_pred[0])
 
-    # Update current_value for next prediction
-    # If model expects multiple features, you need to append lag features correctly
-    # For 1 feature (like Close price only):
-    current_value = np.array(next_pred).reshape(1, -1)
+        # Update current_value for next prediction
+        # If model expects multiple features, you need to append lag features correctly
+        # For 1 feature (like Close price only):
+        current_value = np.array(next_pred).reshape(1, -1)
 
-# Inverse scale if scaler exists
-if scaler is not None:
-    predictions = scaler.inverse_transform(np.array(predictions_scaled).reshape(-1, 1))
-else:
-    predictions = np.array(predictions_scaled).reshape(-1, 1)
+    # Inverse scale if scaler exists
+    if scaler is not None:
+        predictions = scaler.inverse_transform(np.array(predictions_scaled).reshape(-1, 1))
+    else:
+        predictions = np.array(predictions_scaled).reshape(-1, 1)
 
-# Prepare dates
-last_date = df['Date'].iloc[-1]
-future_dates = [last_date + timedelta(days=i+1) for i in range(30)]
+    # Prepare dates
+    last_date = df['Date'].iloc[-1]
+    future_dates = [last_date + timedelta(days=i+1) for i in range(30)]
 
-pred_df = pd.DataFrame({
-    "Date": future_dates,
-    "Predicted Close": predictions.flatten()
+    pred_df = pd.DataFrame({
+        "Date": future_dates,
+        "Predicted Close": predictions.flatten()
 })
 
-st.write(pred_df)
+    st.write(pred_df)
 
 
     # -------------------------------------
@@ -132,6 +133,7 @@ st.write(pred_df)
 
 else:
     st.info("👉 Please upload your Stock Market CSV file to continue.")
+
 
 
 
