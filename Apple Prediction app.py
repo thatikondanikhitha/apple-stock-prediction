@@ -66,8 +66,7 @@ if uploaded_file is not None:
     current_value = last_value
 
     for _ in range(30):
-        dmatrix=xgb.DMatrix(current_value.reshape(1, -1))
-        next_pred = model.predict(dmatrix)
+        next_pred = model.predict(current_value.reshape(1, -1))
         predictions_scaled.append(next_pred[0])
         current_value = next_pred
 
@@ -103,5 +102,6 @@ if uploaded_file is not None:
 
 else:
     st.info("👉 Please upload your Stock Market CSV file to continue.")
+
 
 
