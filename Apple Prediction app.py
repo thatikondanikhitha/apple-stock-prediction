@@ -157,3 +157,15 @@ else:
         'Low': [149, 149, 148],
         'Close': [150.25, 152.10, 149.80],
         'Volume': [1000000, 1100000, 1050000],
+        'Feature6': [1, 2, 3],
+        'Feature7': [1, 2, 3],
+        'Feature8': [1, 2, 3],
+        'Feature9': [1, 2, 3],
+        'Feature10': [1, 2, 3]
+    })
+    st.dataframe(sample_data)
+
+# Footer
+st.markdown("---")
+st.markdown("Made with  using Streamlit + XGBoost")
+
