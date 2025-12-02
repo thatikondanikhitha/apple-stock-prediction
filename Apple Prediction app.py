@@ -109,8 +109,7 @@ else:
     # Prepare dates
 last_date = df['Date'].iloc[-1]
 future_dates = [last_date + timedelta(days=i+1) for i in range(30)]
-
- pred_df = pd.DataFrame({
+pred_df = pd.DataFrame({
     "Date": future_dates,
     "Predicted Close": predictions.flatten()
 })
@@ -133,6 +132,7 @@ future_dates = [last_date + timedelta(days=i+1) for i in range(30)]
 
 else:
     st.info("👉 Please upload your Stock Market CSV file to continue.")
+
 
 
 
