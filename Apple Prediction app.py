@@ -90,8 +90,10 @@ if uploaded_file is not None:
                 try:
                     pred = model.predict(current_value.reshape(1, -1))[0]
                     predictions.append(pred)
+                    successful_predictions += 1
                     # Simple autoregressive: use prediction for all features
-                    current_value = np.full(len(available_features), pred)
+                    current_value = np.zero(len(excepted_features)
+                    current_value[:len(csv_features)] = pred 
                 except Exception as e:
                     st.error(f"Step {i}: {str(e)}")
                     break
@@ -119,3 +121,4 @@ if uploaded_file is not None:
 
 else:
     st.info("👆 Upload CSV with Date + your 5 features")
+
