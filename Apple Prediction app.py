@@ -32,7 +32,10 @@ uploaded_file = st.file_uploader("Upload Stock Market CSV", type=["csv"])
 
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
-    df['Date'] = pd.to_datetime(df['Date'])
+    #df['Date'] = pd.to_datetime(df['Date'])
+    df['Date'] = pd.to_datetime(df['Date'], errors='coerce', infer_datetime_format=True)
+    df = df.dropna(subset=['Date'])
+
     df = df.sort_values("Date")
 
     st.subheader("📄 Uploaded Data Preview")
@@ -98,4 +101,5 @@ if uploaded_file is not None:
 
 else:
     st.info("👉 Please upload your Stock Market CSV file to continue.")
+
 
