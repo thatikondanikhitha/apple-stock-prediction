@@ -8,8 +8,8 @@ from datetime import timedelta
 # -------------------------------
 # Load Model and Scaler
 # -------------------------------
-MODEL_PATH = "final_model.pkl"       # change your filename
-SCALER_PATH = "scaler.pkl"           # if used
+MODEL_PATH = "xgb_model.pkl"       # change your filename
+SCALER_PATH = "model_name.pkl"           # if used
 
 @st.cache_resource
 def load_model():
@@ -146,6 +146,7 @@ if uploaded_file:
     st.pyplot(plt)
 else:
     st.info("👉 Please upload your Stock Market CSV file to continue.")
+
 
 
 
