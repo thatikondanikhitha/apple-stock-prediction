@@ -32,10 +32,9 @@ uploaded_file = st.file_uploader("Upload Stock Market CSV", type=["csv"])
 
 if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
-    #df['Date'] = pd.to_datetime(df['Date'])
+    # df['Date'] = pd.to_datetime(df['Date'])
     df['Date'] = pd.to_datetime(df['Date'], errors='coerce', infer_datetime_format=True)
     df = df.dropna(subset=['Date'])
-
     df = df.sort_values("Date")
 
     st.subheader("📄 Uploaded Data Preview")
@@ -45,7 +44,6 @@ if uploaded_file is not None:
     # Feature Preparation
     # -------------------------------------
     st.subheader("🔧 Feature Engineering")
-
     # Use only closing price (modify if you used more features)
     data = df[['Close']].values
 
@@ -55,21 +53,25 @@ if uploaded_file is not None:
         data_scaled = data
 
     last_value = data_scaled[-1]
-"""
+
     # -------------------------------------
     # Predict Next 30 Days
     # -------------------------------------
     st.subheader("📊 Next 30 Days Prediction")
 
+    # Assume last_value is a numpy array of shape (n_features,)
+    current_value = last_value.reshape(1, -1)  # ensure correct 2D shape
     predictions_scaled = []
-    current_value = last_value
 
     for _ in range(30):
-        next_pred = model.predict(current_value.reshape(1, -1))
+        # Predict next day
+        next_pred = model.predict(current_value)  # shape (1,) or (1,1)
         predictions_scaled.append(next_pred[0])
-        current_value = next_pred
+        # Update current_value for next prediction
+        # For 1 feature (like Close price only):
+        current_value = np.array(next_pred).reshape(1, -1)
 
-    # Inverse transform if scaler exists
+    # Inverse scale if scaler exists
     if scaler is not None:
         predictions = scaler.inverse_transform(np.array(predictions_scaled).reshape(-1, 1))
     else:
@@ -78,58 +80,25 @@ if uploaded_file is not None:
     # Prepare dates
     last_date = df['Date'].iloc[-1]
     future_dates = [last_date + timedelta(days=i+1) for i in range(30)]
-
     pred_df = pd.DataFrame({
         "Date": future_dates,
         "Predicted Close": predictions.flatten()
     })
-
-    st.write(pred_df)"""
-
-   # Assume last_value is a numpy array of shape (n_features,)
-current_value = last_value.reshape(1, -1)  # ensure correct 2D shape
-predictions_scaled = []
-
-for _ in range(30):
-    # Predict next day
-    next_pred = model.predict(current_value)  # shape (1,) or (1,1)
-    predictions_scaled.append(next_pred[0])
-
-    # Update current_value for next prediction
-    # If model expects multiple features, you need to append lag features correctly
-    # For 1 feature (like Close price only):
-    current_value = np.array(next_pred).reshape(1, -1)
-
-    # Inverse scale if scaler exists
-if scaler is not None:
-    predictions = scaler.inverse_transform(np.array(predictions_scaled).reshape(-1, 1))
-else:
-    predictions = np.array(predictions_scaled).reshape(-1, 1)
-
-    # Prepare dates
-last_date = df['Date'].iloc[-1]
-future_dates = [last_date + timedelta(days=i+1) for i in range(30)]
-pred_df = pd.DataFrame({
-    "Date": future_dates,
-    "Predicted Close": predictions.flatten()
-})
-st.write(pred_df)
-
+    st.write(pred_df)
 
     # -------------------------------------
     # Graph
     # -------------------------------------
-st.subheader("📈 Prediction Visualization")
-plt.figure(figsize=(10, 5))
-plt.plot(df["Date"], df["Close"], label="Historical Close Price")
-plt.plot(pred_df["Date"], pred_df["Predicted Close"], label="Predicted Close", linestyle='--')
-plt.xlabel("Date")
-plt.ylabel("Price")
-plt.legend()
-st.pyplot(plt)
- else:
+    st.subheader("📈 Prediction Visualization")
+    plt.figure(figsize=(10, 5))
+    plt.plot(df["Date"], df["Close"], label="Historical Close Price")
+    plt.plot(pred_df["Date"], pred_df["Predicted Close"], label="Predicted Close", linestyle='--')
+    plt.xlabel("Date")
+    plt.ylabel("Price")
+    plt.legend()
+    st.pyplot(plt)
+else:
     st.info("👉 Please upload your Stock Market CSV file to continue.")
-
 
 
 
