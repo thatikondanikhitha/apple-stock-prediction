@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
+import xgboost as xgb
 import matplotlib.pyplot as plt
 from datetime import timedelta
 
@@ -65,7 +66,8 @@ if uploaded_file is not None:
     current_value = last_value
 
     for _ in range(30):
-        next_pred = model.predict(current_value.reshape(1, -1))
+        dmatrix=xgb.DMatrix(current_value.reshape(1, -1))
+        next_pred = model.predict(dmatrix)
         predictions_scaled.append(next_pred[0])
         current_value = next_pred
 
@@ -101,4 +103,5 @@ if uploaded_file is not None:
 
 else:
     st.info("👉 Please upload your Stock Market CSV file to continue.")
+
 
