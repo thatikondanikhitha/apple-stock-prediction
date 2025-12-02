@@ -92,7 +92,7 @@ if uploaded_file is not None:
                     predictions.append(pred)
                     successful_predictions += 1
                     # Simple autoregressive: use prediction for all features
-                    current_value = np.zero(len(excepted_features)
+                    current_value = np.zero(len(excepted_features))
                     current_value[:len(csv_features)] = pred 
                 except Exception as e:
                     st.error(f"Step {i}: {str(e)}")
@@ -121,4 +121,5 @@ if uploaded_file is not None:
 
 else:
     st.info("👆 Upload CSV with Date + your 5 features")
+
 
