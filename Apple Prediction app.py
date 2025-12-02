@@ -119,18 +119,17 @@ st.write(pred_df)
     # -------------------------------------
     # Graph
     # -------------------------------------
-    st.subheader("📈 Prediction Visualization")
-
-    plt.figure(figsize=(10, 5))
-    plt.plot(df["Date"], df["Close"], label="Historical Close Price")
-    plt.plot(pred_df["Date"], pred_df["Predicted Close"], label="Predicted Close", linestyle='--')
-    plt.xlabel("Date")
-    plt.ylabel("Price")
-    plt.legend()
-    st.pyplot(plt)
-
+st.subheader("📈 Prediction Visualization")
+plt.figure(figsize=(10, 5))
+plt.plot(df["Date"], df["Close"], label="Historical Close Price")
+plt.plot(pred_df["Date"], pred_df["Predicted Close"], label="Predicted Close", linestyle='--')
+plt.xlabel("Date")
+plt.ylabel("Price")
+plt.legend()
+st.pyplot(plt)
 else:
     st.info("👉 Please upload your Stock Market CSV file to continue.")
+
 
 
 
