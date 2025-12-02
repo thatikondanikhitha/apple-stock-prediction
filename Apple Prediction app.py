@@ -55,8 +55,8 @@ if uploaded_file is not None:
         data_scaled = data
 
     last_value = data_scaled[-1]
-
-   ''' # -------------------------------------
+"""
+    # -------------------------------------
     # Predict Next 30 Days
     # -------------------------------------
     st.subheader("📊 Next 30 Days Prediction")
@@ -84,7 +84,7 @@ if uploaded_file is not None:
         "Predicted Close": predictions.flatten()
     })
 
-    st.write(pred_df)'''
+    st.write(pred_df)"""
 
    # Assume last_value is a numpy array of shape (n_features,)
     current_value = last_value.reshape(1, -1)  # ensure correct 2D shape
@@ -133,6 +133,7 @@ if uploaded_file is not None:
 
 else:
     st.info("👉 Please upload your Stock Market CSV file to continue.")
+
 
 
 
