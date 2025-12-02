@@ -70,7 +70,7 @@ if uploaded_file is not None:
     # -------------------------------
     st.subheader("🔧 Feature Engineering")
 
-    FEATURES = ['Open', 'High', 'Low', 'Close', 'Volume', 'Feature6', 'Feature7', 'Feature8', 'Feature9', 'Feature10']  # update to your real features
+    FEATURES = ['Open', 'High', 'Low', 'Close', 'Volume']  # update to your real features
 
     missing_features = [f for f in FEATURES if f not in df.columns]
     if missing_features:
@@ -168,4 +168,5 @@ else:
 # Footer
 st.markdown("---")
 st.markdown("Made with  using Streamlit + XGBoost")
+
 
