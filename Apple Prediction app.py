@@ -127,8 +127,9 @@ plt.xlabel("Date")
 plt.ylabel("Price")
 plt.legend()
 st.pyplot(plt)
-else:
+ else:
     st.info("👉 Please upload your Stock Market CSV file to continue.")
+
 
 
 
