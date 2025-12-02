@@ -113,8 +113,7 @@ pred_df = pd.DataFrame({
     "Date": future_dates,
     "Predicted Close": predictions.flatten()
 })
-
-    st.write(pred_df)
+st.write(pred_df)
 
 
     # -------------------------------------
@@ -132,6 +131,7 @@ pred_df = pd.DataFrame({
 
 else:
     st.info("👉 Please upload your Stock Market CSV file to continue.")
+
 
 
 
