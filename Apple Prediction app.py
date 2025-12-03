@@ -85,7 +85,7 @@ if uploaded_file is not None:
         st.dataframe(pred_df)
         
         # Plot
-        fig, ax = plt.subplots(figsize=(4,4))
+        fig, ax = plt.subplots(figsize=(10,3))
         ax.plot(df["Date"], df["Close"], label="Historical Close", linewidth=2)
         ax.plot(pred_df["Date"], pred_df["Predicted"], 
                 label="Forecast", linestyle="--", color="orange", linewidth=2)
@@ -104,6 +104,7 @@ if uploaded_file is not None:
 
 else:
     st.info("👆 Upload your CSV to start predicting!")
+
 
 
 
